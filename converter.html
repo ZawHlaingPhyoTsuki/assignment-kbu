@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .converter-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .converter-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .converter-section h2 {
+            margin-top: 0;
+            color: #444;
+            font-size: 1.2em;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        input, select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex-grow: 1;
+            min-width: 100px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 20px;
+            color: #2c3e50;
+            padding: 5px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        span {
+            color: #666;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .back-button {
+            background-color: #f44336;
+        }
+        .back-button:hover {
+            background-color: #d32f2f;
+        }
+        .home-button {
+            background-color: #2196F3;
+        }
+        .home-button:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <h1>Unit Converter</h1>
+    
+    <div class="converter-container">
+        <!-- Length Converter -->
+        <div class="converter-section">
+            <h2>Length Converter</h2>
+            <div class="input-group">
+                <input type="number" id="lengthValue" placeholder="e.g. 100" required>
+                <select id="lengthFrom">
+                    <option value="mm">Millimeters (mm)</option>
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="m" selected>Meters (m)</option>
+                    <option value="km">Kilometers (km)</option>
+                    <option value="in">Inches (in)</option>
+                    <option value="ft">Feet (ft)</option>
+                    <option value="yd">Yards (yd)</option>
+                    <option value="mi">Miles (mi)</option>
+                </select>
+                <span>to</span>
+                <select id="lengthTo">
+                    <option value="mm">Millimeters (mm)</option>
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="m">Meters (m)</option>
+                    <option value="km" selected>Kilometers (km)</option>
+                    <option value="in">Inches (in)</option>
+                    <option value="ft">Feet (ft)</option>
+                    <option value="yd">Yards (yd)</option>
+                    <option value="mi">Miles (mi)</option>
+                </select>
+            </div>
+            <button onclick="convertLength()">Convert</button>
+            <div id="lengthError" class="error"></div>
+            <div class="result" id="lengthResult"></div>
+        </div>
+        
+        <!-- Height Converter -->
+        <div class="converter-section">
+            <h2>Height Converter</h2>
+            <div class="input-group">
+                <input type="number" id="heightValue" placeholder="e.g. 1.75" required>
+                <select id="heightFrom">
+                    <option value="cm" selected>Centimeters (cm)</option>
+                    <option value="m">Meters (m)</option>
+                    <option value="in">Inches (in)</option>
+                    <option value="ft">Feet (ft)</option>
+                </select>
+                <span>to</span>
+                <select id="heightTo">
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="m">Meters (m)</option>
+                    <option value="in" selected>Inches (in)</option>
+                    <option value="ft">Feet (ft)</option>
+                </select>
+            </div>
+            <button onclick="convertHeight()">Convert</button>
+            <div id="heightError" class="error"></div>
+            <div class="result" id="heightResult"></div>
+        </div>
+        
+        <!-- Temperature Converter -->
+        <div class="converter-section">
+            <h2>Temperature Converter</h2>
+            <div class="input-group">
+                <input type="number" id="tempValue" placeholder="e.g. 25" required>
+                <select id="tempFrom">
+                    <option value="c" selected>Celsius (°C)</option>
+                    <option value="f">Fahrenheit (°F)</option>
+                    <option value="k">Kelvin (K)</option>
+                </select>
+                <span>to</span>
+                <select id="tempTo">
+                    <option value="c">Celsius (°C)</option>
+                    <option value="f" selected>Fahrenheit (°F)</option>
+                    <option value="k">Kelvin (K)</option>
+                </select>
+            </div>
+            <button onclick="convertTemperature()">Convert</button>
+            <div id="tempError" class="error"></div>
+            <div class="result" id="tempResult"></div>
+        </div>
+        
+        <!-- Area Converter -->
+        <div class="converter-section">
+            <h2>Area Converter</h2>
+            <div class="input-group">
+                <input type="number" id="areaValue" placeholder="e.g. 100" required>
+                <select id="areaFrom">
+                    <option value="mm2">Square Millimeters (mm²)</option>
+                    <option value="cm2">Square Centimeters (cm²)</option>
+                    <option value="m2" selected>Square Meters (m²)</option>
+                    <option value="km2">Square Kilometers (km²)</option>
+                    <option value="in2">Square Inches (in²)</option>
+                    <option value="ft2">Square Feet (ft²)</option>
+                    <option value="ac">Acres (ac)</option>
+                    <option value="ha">Hectares (ha)</option>
+                </select>
+                <span>to</span>
+                <select id="areaTo">
+                    <option value="mm2">Square Millimeters (mm²)</option>
+                    <option value="cm2">Square Centimeters (cm²)</option>
+                    <option value="m2">Square Meters (m²)</option>
+                    <option value="km2" selected>Square Kilometers (km²)</option>
+                    <option value="in2">Square Inches (in²)</option>
+                    <option value="ft2">Square Feet (ft²)</option>
+                    <option value="ac">Acres (ac)</option>
+                    <option value="ha">Hectares (ha)</option>
+                </select>
+            </div>
+            <button onclick="convertArea()">Convert</button>
+            <div id="areaError" class="error"></div>
+            <div class="result" id="areaResult"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <button onclick="goBack()" class="back-button">Back</button>
+        <button onclick="goHome()" class="home-button">Home</button>
+    </div>
+
+    <script>
+        // Navigation functions
+        function goBack() {
+            window.history.back();
+        }
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        // Validation helper
+        function validateInput(inputElement, errorElement) {
+            if (!inputElement.checkValidity()) {
+                errorElement.textContent = "Please enter a valid number";
+                return false;
+            }
+            errorElement.textContent = "";
+            return true;
+        }
+
+        // Length conversion
+        function convertLength() {
+            const input = document.getElementById("lengthValue");
+            const error = document.getElementById("lengthError");
+            if (!validateInput(input, error)) return;
+
+            const value = parseFloat(input.value);
+            const fromUnit = document.getElementById("lengthFrom").value;
+            const toUnit = document.getElementById("lengthTo").value;
+            
+            let meters;
+            switch(fromUnit) {
+                case "mm": meters = value / 1000; break;
+                case "cm": meters = value / 100; break;
+                case "m": meters = value; break;
+                case "km": meters = value * 1000; break;
+                case "in": meters = value * 0.0254; break;
+                case "ft": meters = value * 0.3048; break;
+                case "yd": meters = value * 0.9144; break;
+                case "mi": meters = value * 1609.344; break;
+            }
+            
+            let result;
+            switch(toUnit) {
+                case "mm": result = meters * 1000; break;
+                case "cm": result = meters * 100; break;
+                case "m": result = meters; break;
+                case "km": result = meters / 1000; break;
+                case "in": result = meters / 0.0254; break;
+                case "ft": result = meters / 0.3048; break;
+                case "yd": result = meters / 0.9144; break;
+                case "mi": result = meters / 1609.344; break;
+            }
+            
+            document.getElementById("lengthResult").innerHTML = `${value} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+        }
+
+        // Height conversion 
+        function convertHeight() {
+            const input = document.getElementById("heightValue");
+            const error = document.getElementById("heightError");
+            if (!validateInput(input, error)) return;
+
+            const value = parseFloat(input.value);
+            const fromUnit = document.getElementById("heightFrom").value;
+            const toUnit = document.getElementById("heightTo").value;
+            
+            let meters;
+            switch(fromUnit) {
+                case "cm": meters = value / 100; break;
+                case "m": meters = value; break;
+                case "in": meters = value * 0.0254; break;
+                case "ft": meters = value * 0.3048; break;
+            }
+            
+            let result;
+            switch(toUnit) {
+                case "cm": result = meters * 100; break;
+                case "m": result = meters; break;
+                case "in": result = meters / 0.0254; break;
+                case "ft": result = meters / 0.3048; break;
+            }
+            
+            document.getElementById("heightResult").innerHTML = `${value} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+        }
+
+        // Temperature conversion
+        function convertTemperature() {
+            const input = document.getElementById("tempValue");
+            const error = document.getElementById("tempError");
+            if (!validateInput(input, error)) return;
+
+            const value = parseFloat(input.value);
+            const fromUnit = document.getElementById("tempFrom").value;
+            const toUnit = document.getElementById("tempTo").value;
+            
+            let celsius;
+            switch(fromUnit) {
+                case "c": celsius = value; break;
+                case "f": celsius = (value - 32) * 5/9; break;
+                case "k": celsius = value - 273.15; break;
+            }
+            
+            let result;
+            switch(toUnit) {
+                case "c": result = celsius; break;
+                case "f": result = (celsius * 9/5) + 32; break;
+                case "k": result = celsius + 273.15; break;
+            }
+            
+            document.getElementById("tempResult").innerHTML = `${value} ${getTempSymbol(fromUnit)} = ${result.toFixed(4)} ${getTempSymbol(toUnit)}`;
+        }
+
+        function getTempSymbol(unit) {
+            switch(unit) {
+                case "c": return "°C";
+                case "f": return "°F";
+                case "k": return "K";
+                default: return "";
+            }
+        }
+
+        // Area conversion
+        function convertArea() {
+            const input = document.getElementById("areaValue");
+            const error = document.getElementById("areaError");
+            if (!validateInput(input, error)) return;
+
+            const value = parseFloat(input.value);
+            const fromUnit = document.getElementById("areaFrom").value;
+            const toUnit = document.getElementById("areaTo").value;
+            
+            let squareMeters;
+            switch(fromUnit) {
+                case "mm2": squareMeters = value / 1000000; break;
+                case "cm2": squareMeters = value / 10000; break;
+                case "m2": squareMeters = value; break;
+                case "km2": squareMeters = value * 1000000; break;
+                case "in2": squareMeters = value * 0.00064516; break;
+                case "ft2": squareMeters = value * 0.092903; break;
+                case "ac": squareMeters = value * 4046.86; break;
+                case "ha": squareMeters = value * 10000; break;
+            }
+            
+            let result;
+            switch(toUnit) {
+                case "mm2": result = squareMeters * 1000000; break;
+                case "cm2": result = squareMeters * 10000; break;
+                case "m2": result = squareMeters; break;
+                case "km2": result = squareMeters / 1000000; break;
+                case "in2": result = squareMeters / 0.00064516; break;
+                case "ft2": result = squareMeters / 0.092903; break;
+                case "ac": result = squareMeters / 4046.86; break;
+                case "ha": result = squareMeters / 10000; break;
+            }
+            
+            document.getElementById("areaResult").innerHTML = `${value} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thai Baht Change Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+      }
+
+      .container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 300px;
+      }
+
+      h1 {
+        color: #333;
+        margin-top: 0;
+      }
+
+      input {
+        padding: 10px;
+        width: 80%;
+        margin: 15px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        margin: 5px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .result-container {
+        margin-top: 20px;
+        text-align: left;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+      }
+
+      .result-container h3 {
+        margin-top: 0;
+        color: #333;
+      }
+
+      .error {
+        color: red;
+        font-weight: bold;
+      }
+
+      .nav-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .back-button {
+        background-color: #f44336;
+      }
+
+      .back-button:hover {
+        background-color: #d32f2f;
+      }
+
+      .home-button {
+        background-color: #2196f3;
+      }
+
+      .home-button:hover {
+        background-color: #0b7dda;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Thai Baht Change Calculator</h1>
+      <p>Enter amount to calculate change breakdown:</p>
+      <input
+        type="number"
+        id="amountInput"
+        placeholder="Enter amount in THB"
+        min="1"
+        required
+      />
+      <div id="error" class="error"></div>
+      <button onclick="calculateChange()">Calculate</button>
+      <div class="nav-buttons">
+        <button onclick="goBack()" class="back-button">Back</button>
+        <button onclick="goHome()" class="home-button">Home</button>
+      </div>
+      <div id="result" class="result-container"></div>
+    </div>
+
+    <script>
+      function calculateChange() {
+        const amountInput = document.getElementById("amountInput");
+        const errorElement = document.getElementById("error");
+        const resultElement = document.getElementById("result");
+
+        // Clear previous results
+        errorElement.textContent = "";
+        resultElement.innerHTML = "";
+
+        // Validate input
+        if (!amountInput.checkValidity()) {
+          errorElement.textContent =
+            "Please enter a valid positive number (≥ 1)";
+          return;
+        }
+
+        const amount = parseInt(amountInput.value);
+        let remaining = amount;
+        const denominations = [1000, 500, 100, 50, 20, 10, 5, 2, 1];
+        const results = {};
+
+        // Calculate change
+        for (const denom of denominations) {
+          results[denom] = Math.floor(remaining / denom);
+          remaining %= denom;
+        }
+
+        // Display results
+        resultElement.innerHTML = "<h3>Change Breakdown:</h3>";
+        for (const denom of denominations) {
+          if (results[denom] > 0) {
+            const p = document.createElement("p");
+            p.textContent = `${results[denom]} × ${denom}฿`;
+            resultElement.appendChild(p);
+          }
+        }
+      }
+
+      function goBack() {
+        window.history.back();
+      }
+
+      function goHome() {
+        window.location.href = "index.html"; // Return to main menu
+      }
+    </script>
+  </body>
+</html>

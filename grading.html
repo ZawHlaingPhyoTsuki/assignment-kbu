@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Assignment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            min-height: 24px;
+        }
+
+        .grade-scale {
+            margin-top: 20px;
+            text-align: left;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .back-button {
+            background-color: #f44336;
+        }
+
+        .back-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Grade Assignment</h1>
+        <p>Enter your score to see your grade:</p>
+        <input type="number" id="scoreInput" placeholder="Enter score (0-100)" min="0" max="100" required>
+        <div id="error" class="error"></div>
+        <button onclick="assignGrade()">Submit</button>
+        <button onclick="goBack()" class="back-button">Back</button>
+        <div id="result"></div>
+        <div class="grade-scale">
+            <p>Grade Scale:</p>
+            <p>90+ = A</p>
+            <p>80-89 = B</p>
+            <p>70-79 = C</p>
+            <p>60-69 = D</p>
+            <p>Below 60 = F</p>
+        </div>
+    </div>
+
+    <script>
+        function assignGrade() {
+            const scoreInput = document.getElementById('scoreInput');
+            const errorElement = document.getElementById('error');
+            const resultElement = document.getElementById('result');
+
+            // Reset previous errors
+            errorElement.textContent = '';
+            resultElement.textContent = '';
+
+            // Validate using checkValidity()
+            if (!scoreInput.checkValidity()) {
+                errorElement.textContent = "Please enter a valid score (0-100).";
+                return;
+            }
+
+            const score = parseInt(scoreInput.value);
+            let grade;
+
+            if (score >= 90) {
+                grade = "A";
+            } else if (score >= 80) {
+                grade = "B";
+            } else if (score >= 70) {
+                grade = "C";
+            } else if (score >= 60) {
+                grade = "D";
+            } else {
+                grade = "F";
+            }
+
+            resultElement.textContent = `You got a grade of "${grade}".`;
+            resultElement.style.color = "#4CAF50";
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
