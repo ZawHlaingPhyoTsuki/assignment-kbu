@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Distance to Kasem Bundit University</title>
-    <style>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Distance Calculator</title>
+      <style>
       body {
         font-family: Arial, sans-serif;
         max-width: 600px;
@@ -25,31 +25,18 @@
       button:hover {
         background-color: #45a049;
       }
-      #result {
-        font-size: 18px;
-        margin-top: 20px;
-        padding: 15px;
-        border-radius: 5px;
-        background-color: #f8f8f8;
-      }
-      .error {
-        color: red;
-      }
     </style>
-  </head>
-  <body>
-    <h1>Distance to Kasem Bundit University</h1>
-    <p>Click the button to calculate your distance from the university</p>
+</head>
+<body>
+  <h1>Distance to Kasem Bundit University</h1>
+  <button id="getLocation">Get My Distance to University</button>
+  <div id="result"></div>
 
-    <button onclick="calculateDistance()">Where am I?</button>
-
-    <div id="result"></div>
-
-    <script>
-      // University location
+  <script>
+    // University location
     const uniLocation = {
-      lat: 13.738056,
-      lng: 100.626944,
+      lat: 13.8037877,
+      lng: 100.736817935,
     };
 
     // Haversine formula to calculate distance between two points on Earth
@@ -100,6 +87,6 @@
         }
       );
     });
-    </script>
-  </body>
+  </script>
+</body>
 </html>
